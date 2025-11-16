@@ -29,7 +29,7 @@ export const getTenant = async (req:Request,res:Response) => {
 
 export const createTenant = async (req:Request,res:Response) => {
     try{
-        const {cognito_id,name,email,phone} = req.body;
+        const {cognito_id,name,email,phone_number} = req.body;
 
         const { data: existingTenant, error: fetchError } = await supabase
                     .from("tenant")
@@ -47,7 +47,7 @@ export const createTenant = async (req:Request,res:Response) => {
                         cognito_id,
                         name,
                         email,
-                        phone
+                        phone_number
                     })
                     .select()
                     .single();

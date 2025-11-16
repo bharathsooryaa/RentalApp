@@ -36,8 +36,8 @@ export const authMiddleware = (
                 return res.status(401).json({ error: 'Invalid or expired token' });
             }
             
-            // Extract user role from app_metadata
-            const userRole = user.app_metadata?.role;
+            // Extract user role from user_metadata
+            const userRole = user.user_metadata?.role;
             
             if (!userRole) {
                 return res.status(401).json({ error: 'User role not found in token' });

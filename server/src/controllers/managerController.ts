@@ -24,7 +24,7 @@ export const getManager=async(req:Request,res:Response)=>{
 
 export const createManager=async(req:Request,res:Response)=>{
     try{
-        const {cognito_id,name,email,phone} = req.body;
+        const {cognito_id,name,email,phone_number} = req.body;
 
         const { data: existingManager, error: fetchError } = await supabase
                     .from("manager")
@@ -42,7 +42,7 @@ export const createManager=async(req:Request,res:Response)=>{
                         cognito_id,
                         name,
                         email,
-                        phone
+                        phone_number
                     })
                     .select()
                     .single();

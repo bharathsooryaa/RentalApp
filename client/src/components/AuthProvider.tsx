@@ -1,7 +1,6 @@
 'use client'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/supabaseClient'
-import { createTenantProfile, createManagerProfile, getUserProfile } from '@/lib/profileApi'
 import type { Manager, Tenant } from '@/types/supabaseTypes'
 
 // Define AppUser type for the application profile
@@ -28,7 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true)
   const [appUser, setAppUser] = useState<AppUser | null>(null)
 
-  // helper: call server to get /sync profile
+  // helper: fetch user profile from server
   const fetchAppProfile = async (accessToken: string | null) => {
     if (!accessToken) {
       setAppUser(null)
@@ -36,8 +35,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     
     try {
-      // For now, we'll try to fetch user profile from Supabase directly
-      // This should be replaced with backend API call when available
       const { data: { user } } = await supabase.auth.getUser()
       
       if (!user) {
@@ -45,38 +42,52 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return
       }
 
-      // Check if user exists in manager or tenant table
-      // First try to find in manager table
-      const { data: managerData, error: managerError } = await supabase
-        .from('manager')
-        .select('*')
-        .eq('cognito_id', user.id)
-        .single()
-
-      if (managerData && !managerError) {
-        setAppUser({
-          role: 'manager',
-          profile: managerData
+      // Try to fetch from manager endpoint first
+      try {
+        const managerResponse = await fetch(`http://localhost:3001/managers/${user.id}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
         })
-        return
+
+        if (managerResponse.ok) {
+          const managerData = await managerResponse.json()
+          setAppUser({
+            role: 'manager',
+            profile: managerData
+          })
+          return
+        }
+      } catch (error) {
+        // Manager fetch failed, try tenant
+        console.log('Manager profile not found, trying tenant...')
       }
 
-      // Then try tenant table
-      const { data: tenantData, error: tenantError } = await supabase
-        .from('tenant')
-        .select('*')
-        .eq('cognito_id', user.id)
-        .single()
-
-      if (tenantData && !tenantError) {
-        setAppUser({
-          role: 'tenant',
-          profile: tenantData
+      // Try to fetch from tenant endpoint
+      try {
+        const tenantResponse = await fetch(`http://localhost:3001/tenants/${user.id}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
         })
-        return
+
+        if (tenantResponse.ok) {
+          const tenantData = await tenantResponse.json()
+          setAppUser({
+            role: 'tenant',
+            profile: tenantData
+          })
+          return
+        }
+      } catch (error) {
+        console.log('Tenant profile not found')
       }
 
-      // If user not found in either table, they might need to complete registration
+      // If neither profile found
       console.log('User authenticated but no profile found in database')
       setAppUser(null)
       
@@ -109,48 +120,58 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (opts: { email: string; password: string; userData?: { name: string; phone: string; role: 'manager' | 'tenant' } }) => {
     setLoading(true)
     try {
-      // Step 1: Create auth user with Supabase
-      const { data, error } = await supabase.auth.signUp({
+      if (!opts.userData) {
+        throw new Error('User data (name, phone, role) is required for signup')
+      }
+
+      // Create user in Supabase Auth directly
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email: opts.email,
         password: opts.password,
         options: {
-          data: opts.userData || {},
+          data: opts.userData,
         },
       })
       
-      if (error) throw error
-
-      // Step 2: If user created successfully and we have userData, create profile
-      if (data.user && opts.userData) {
-        const { name, phone, role } = opts.userData
-        
+      if (authError) throw authError
+      
+      // If auth user is created successfully, create profile via server
+      if (authData.user && authData.session) {
         try {
-          // Create profile using utility functions
-          if (role === 'tenant') {
-            const tenantProfile = await createTenantProfile({
-              cognito_id: data.user.id,
-              name: name,
+          const endpoint = opts.userData.role === 'manager' ? '/managers' : '/tenants'
+          const response = await fetch(`http://localhost:3001${endpoint}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authData.session.access_token}`
+            },
+            body: JSON.stringify({
+              cognito_id: authData.user.id,
+              name: opts.userData.name,
               email: opts.email,
-              phone_number: phone || ''
+              phone_number: opts.userData.phone
             })
-            console.log('Tenant profile created successfully:', tenantProfile)
-          } else if (role === 'manager') {
-            const managerProfile = await createManagerProfile({
-              cognito_id: data.user.id,
-              name: name,
-              email: opts.email,
-              phone_number: phone || ''
+          })
+
+          if (!response.ok) {
+            const errorData = await response.json()
+            console.error('Failed to create profile:', errorData)
+            // Profile creation failed, but auth user was created
+            // The user can still sign in, but they'll need to complete profile setup
+          } else {
+            const profileData = await response.json()
+            setAppUser({
+              role: opts.userData.role,
+              profile: profileData
             })
-            console.log('Manager profile created successfully:', managerProfile)
           }
         } catch (profileError) {
-          console.error('Profile creation failed:', profileError)
-          // Continue - user auth was successful even if profile creation failed
-          // You might want to show a message to user about completing profile later
+          console.error('Error creating profile via server:', profileError)
+          // Continue with auth success even if profile creation fails
         }
       }
 
-      return data
+      return authData
     } catch (error) {
       console.error('Sign up error:', error)
       throw error

@@ -40,8 +40,8 @@ app.get('/', (req, res) => {
 });
 
 // API Routes
-app.use("/tenants", tenantRoutes)
-app.use("/managers", managerRoutes)
+app.use("/tenants", authMiddleware(["tenant"]), tenantRoutes)
+app.use("/managers", authMiddleware(["manager"]), managerRoutes)
 
 // Health check endpoint
 app.get('/health', (req, res) => {
