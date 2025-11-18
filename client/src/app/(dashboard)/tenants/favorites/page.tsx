@@ -1,25 +1,26 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetTenantFavoritesQuery, useRemoveFavoriteMutation } from '@/state/api';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Loader2, Heart, MapPin, DollarSign, Bed, Bath, Square, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAuth } from '@/components/AuthProvider';
 
 const Favorites = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: favorites, isLoading, error } = useGetTenantFavoritesQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: favorites, isLoading, error } = useGetTenantFavoritesQuery(user?.id || '', {
+    skip: !user?.id
   });
   const [removeFavorite, { isLoading: isRemoving }] = useRemoveFavoriteMutation();
 
   const handleRemoveFavorite = async (propertyId: number) => {
-    if (!cognitoId) return;
+    if (!user?.id) return;
 
     try {
-      await removeFavorite({ cognitoId, propertyId }).unwrap();
+      await removeFavorite({ cognitoId: user.id, propertyId }).unwrap();
       toast.success('Property removed from favorites');
     } catch (err) {
       console.error('Failed to remove favorite:', err);

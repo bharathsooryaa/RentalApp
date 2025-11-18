@@ -1,17 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetTenantApplicationsQuery } from '@/state/api';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Loader2, FileText, Calendar, MapPin, DollarSign, Home, Bed, Bath, Square } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuth } from '@/components/AuthProvider';
 
 const Applications = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: applications, isLoading, error } = useGetTenantApplicationsQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: applications, isLoading, error } = useGetTenantApplicationsQuery(user?.id || '', {
+    skip: !user?.id
   });
 
   const getStatusColor = (status: string) => {

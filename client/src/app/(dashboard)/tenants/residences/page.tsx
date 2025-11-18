@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Home, MapPin, Calendar, DollarSign, User, Phone, Mail, Bed, Bath, Square, Receipt, ChevronDown, ChevronUp } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { useAuth } from '@/components/AuthProvider';
 
 const Residences = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: residences, isLoading, error } = useGetTenantResidencesQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: residences, isLoading, error } = useGetTenantResidencesQuery(user?.id || '', {
+    skip: !user?.id
   });
 
   const [expandedLease, setExpandedLease] = useState<number | null>(null);
@@ -165,6 +166,11 @@ const Residences = () => {
           {residences.map((lease) => {
             const property = lease.property;
             const status = getLeaseStatus(lease.start_date, lease.end_date);
+
+            // Skip if property is null
+            if (!property) {
+              return null;
+            }
 
             return (
               <Card key={lease.id} className="overflow-hidden hover:shadow-lg transition-shadow">

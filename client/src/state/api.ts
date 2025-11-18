@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { supabase } from "@/lib/supabase/supabaseClient";
 
 export interface Tenant {
   id: number;
@@ -97,6 +98,16 @@ export interface Payment {
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    prepareHeaders: async (headers) => {
+      // Get the current session to retrieve the access token
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session?.access_token) {
+        headers.set('Authorization', `Bearer ${session.access_token}`);
+      }
+      
+      return headers;
+    },
   }),
   reducerPath: "api",
   tagTypes: ["Tenant", "Manager", "Applications", "Favorites", "Residences", "Payments", "Properties"],

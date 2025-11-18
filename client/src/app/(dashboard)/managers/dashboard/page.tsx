@@ -1,26 +1,27 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetManagerQuery, useGetManagerPropertiesQuery, useGetManagerApplicationsQuery } from '@/state/api';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Loader2, Building, FileText, DollarSign, TrendingUp, Users, Calendar, MapPin, Eye, Plus, CheckCircle, Clock, XCircle } from 'lucide-react';
 import Link from 'next/link';
+import { useAuth } from '@/components/AuthProvider';
 
 const Dashboard = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: manager, isLoading: managerLoading } = useGetManagerQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: manager, isLoading: managerLoading } = useGetManagerQuery(user?.id || '', {
+    skip: !user?.id
   });
-  const { data: properties, isLoading: propertiesLoading } = useGetManagerPropertiesQuery(cognitoId, {
-    skip: !cognitoId
+  const { data: properties, isLoading: propertiesLoading } = useGetManagerPropertiesQuery(user?.id || '', {
+    skip: !user?.id
   });
-  const { data: applications, isLoading: applicationsLoading } = useGetManagerApplicationsQuery(cognitoId, {
-    skip: !cognitoId
+  const { data: applications, isLoading: applicationsLoading } = useGetManagerApplicationsQuery(user?.id || '', {
+    skip: !user?.id
   });
 
-  const isLoading = managerLoading || propertiesLoading || applicationsLoading;
+  const isLoading = authLoading || managerLoading || propertiesLoading || applicationsLoading;
 
   // Calculate statistics
   const totalProperties = properties?.length || 0;

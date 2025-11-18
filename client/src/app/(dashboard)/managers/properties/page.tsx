@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useGetManagerPropertiesQuery, useDeletePropertyMutation } from '@/state/api';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Loader2, Plus, MapPin, DollarSign, Bed, Bath, Square, Edit, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { useAuth } from '@/components/AuthProvider';
 
 const Properties = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: properties, isLoading, error } = useGetManagerPropertiesQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: properties, isLoading, error } = useGetManagerPropertiesQuery(user?.id || '', {
+    skip: !user?.id
   });
   const [deleteProperty, { isLoading: isDeleting }] = useDeletePropertyMutation();
 
@@ -30,10 +31,23 @@ const Properties = () => {
     }
   };
 
-  if (isLoading) {
+  if (authLoading || isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="container mx-auto py-8 px-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-red-600">Authentication Required</CardTitle>
+            <CardDescription>Please sign in to view your properties</CardDescription>
+          </CardHeader>
+        </Card>
       </div>
     );
   }

@@ -11,11 +11,12 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Loader2, FileText, Calendar, MapPin, DollarSign, Bed, Bath, Square, Check, X, User, Mail, Phone, FileCheck } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
+import { useAuth } from '@/components/AuthProvider';
 
 const Applications = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: applications, isLoading, error } = useGetManagerApplicationsQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: applications, isLoading, error } = useGetManagerApplicationsQuery(user?.id || '', {
+    skip: !user?.id
   });
   const [updateStatus, { isLoading: isUpdating }] = useUpdateApplicationStatusMutation();
   const [createLease] = useCreateLeaseForApplicationMutation();

@@ -12,10 +12,11 @@ import { Switch } from '@/components/ui/switch';
 import { Loader2, ArrowLeft, Save, Building, Upload, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/components/AuthProvider';
 
 const NewProperty = () => {
   const router = useRouter();
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
+  const { user, loading: authLoading } = useAuth();
   const [createProperty, { isLoading }] = useCreatePropertyMutation();
   
   const [formData, setFormData] = useState({
@@ -68,14 +69,14 @@ const NewProperty = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!cognitoId) {
+    if (!user?.id) {
       toast.error('User not authenticated');
       return;
     }
 
     try {
       await createProperty({
-        manager_cognito_id: cognitoId,
+        manager_cognito_id: user.id,
         name: formData.name,
         description: formData.description,
         price_per_month: parseFloat(formData.price_per_month),

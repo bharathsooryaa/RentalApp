@@ -8,11 +8,12 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Loader2, Save, User, Mail, Phone } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAuth } from '@/components/AuthProvider';
 
 const Settings = () => {
-  const [cognitoId, setCognitoId] = useState<string>(''); // This should come from auth context
-  const { data: manager, isLoading, error } = useGetManagerQuery(cognitoId, {
-    skip: !cognitoId
+  const { user, loading: authLoading } = useAuth();
+  const { data: manager, isLoading, error } = useGetManagerQuery(user?.id || '', {
+    skip: !user?.id
   });
   const [updateManager, { isLoading: isUpdating }] = useUpdateManagerMutation();
 
@@ -43,14 +44,14 @@ const Settings = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!cognitoId) {
+    if (!user?.id) {
       toast.error('User not authenticated');
       return;
     }
 
     try {
       await updateManager({
-        cognitoId,
+        cognitoId: user.id,
         data: formData,
       }).unwrap();
       
