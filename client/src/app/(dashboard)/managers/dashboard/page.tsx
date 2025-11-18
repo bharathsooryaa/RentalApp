@@ -5,7 +5,7 @@ import { useGetManagerQuery, useGetManagerPropertiesQuery, useGetManagerApplicat
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, Building, FileText, DollarSign, TrendingUp, Users, Calendar, MapPin, Eye, Plus, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Loader2, Building, FileText, IndianRupee, TrendingUp, Users, Calendar, MapPin, Eye, Plus, CheckCircle, Clock, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthProvider';
 
@@ -85,14 +85,14 @@ const Dashboard = () => {
             <CardTitle className="text-sm font-medium text-gray-600">
               Monthly Revenue
             </CardTitle>
-            <DollarSign className="w-5 h-5 text-green-600" />
+            <IndianRupee className="w-5 h-5 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-gray-900">
-              ${totalMonthlyRevenue.toLocaleString()}
+              ₹{totalMonthlyRevenue.toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              Avg: ${Math.round(averageRent).toLocaleString()} per property
+              Avg: ₹{Math.round(averageRent).toLocaleString('en-IN')} per property
             </p>
           </CardContent>
         </Card>
@@ -337,7 +337,7 @@ const Dashboard = () => {
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="text-lg font-bold text-green-600">
-                        ${property.price_per_month.toLocaleString()}/mo
+                        ₹{property.price_per_month.toLocaleString('en-IN')}/mo
                       </div>
                       {property.average_rating > 0 && (
                         <div className="flex items-center text-yellow-500">

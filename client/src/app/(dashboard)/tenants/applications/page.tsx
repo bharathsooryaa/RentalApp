@@ -5,7 +5,7 @@ import { useGetTenantApplicationsQuery } from '@/state/api';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, FileText, Calendar, MapPin, DollarSign, Home, Bed, Bath, Square } from 'lucide-react';
+import { Loader2, FileText, Calendar, MapPin, IndianRupee, Home, Bed, Bath, Square } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useAuth } from '@/components/AuthProvider';
 
@@ -140,9 +140,9 @@ const Applications = () => {
                         </div>
 
                         <div className="flex items-center gap-2 text-gray-700">
-                          <DollarSign className="w-4 h-4" />
+                          <IndianRupee className="w-4 h-4" />
                           <span className="text-sm font-semibold">
-                            ${application.property.price_per_month}/month
+                            ₹{application.property.price_per_month.toLocaleString('en-IN')}/month
                           </span>
                         </div>
 

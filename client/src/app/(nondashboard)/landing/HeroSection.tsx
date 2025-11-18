@@ -37,7 +37,7 @@ function HeroSection() {
             type="text"
             value="search query"
             onChange={()=>{}}
-            placeholder="Search by city, neighborhood, orsearch query address"
+            placeholder="Search by city, locality, or address"
             className='w-full max-w-2xl rounded-none rounded-l-xl border-none bg-white h-12'
             />
             <Button

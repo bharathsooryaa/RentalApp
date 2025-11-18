@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Loader2, FileText, Calendar, MapPin, DollarSign, Bed, Bath, Square, Check, X, User, Mail, Phone, FileCheck } from 'lucide-react';
+import { Loader2, FileText, Calendar, MapPin, IndianRupee, Bed, Bath, Square, Check, X, User, Mail, Phone, FileCheck } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { useAuth } from '@/components/AuthProvider';
@@ -208,9 +208,9 @@ const Applications = () => {
                         
                         <div className="space-y-2">
                           <div className="flex items-center gap-2 text-gray-700">
-                            <DollarSign className="w-4 h-4" />
+                            <IndianRupee className="w-4 h-4" />
                             <span className="text-sm font-semibold">
-                              ${application.property.price_per_month}/month
+                              ₹{application.property.price_per_month.toLocaleString('en-IN')}/month
                             </span>
                           </div>
 
@@ -360,7 +360,7 @@ const Applications = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="rent">Monthly Rent ($) *</Label>
+              <Label htmlFor="rent">Monthly Rent (₹) *</Label>
               <Input
                 id="rent"
                 type="number"
@@ -372,7 +372,7 @@ const Applications = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="deposit">Security Deposit ($) *</Label>
+              <Label htmlFor="deposit">Security Deposit (₹) *</Label>
               <Input
                 id="deposit"
                 type="number"

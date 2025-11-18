@@ -34,7 +34,7 @@ const NewProperty = () => {
     address: '',
     city: '',
     state: '',
-    country: 'USA',
+    country: 'India',
     postal_code: '',
   });
 
@@ -171,7 +171,7 @@ const NewProperty = () => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price_per_month">Monthly Rent ($) *</Label>
+                <Label htmlFor="price_per_month">Monthly Rent (₹) *</Label>
                 <Input
                   id="price_per_month"
                   name="price_per_month"
@@ -179,12 +179,12 @@ const NewProperty = () => {
                   step="0.01"
                   value={formData.price_per_month}
                   onChange={handleInputChange}
-                  placeholder="1500"
+                  placeholder="15000"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="security_deposit">Security Deposit ($) *</Label>
+                <Label htmlFor="security_deposit">Security Deposit (₹) *</Label>
                 <Input
                   id="security_deposit"
                   name="security_deposit"
@@ -192,12 +192,12 @@ const NewProperty = () => {
                   step="0.01"
                   value={formData.security_deposit}
                   onChange={handleInputChange}
-                  placeholder="1500"
+                  placeholder="15000"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="application_fee">Application Fee ($) *</Label>
+                <Label htmlFor="application_fee">Application Fee (₹) *</Label>
                 <Input
                   id="application_fee"
                   name="application_fee"
@@ -205,7 +205,7 @@ const NewProperty = () => {
                   step="0.01"
                   value={formData.application_fee}
                   onChange={handleInputChange}
-                  placeholder="50"
+                  placeholder="500"
                   required
                 />
               </div>
@@ -363,7 +363,7 @@ const NewProperty = () => {
                 name="address"
                 value={formData.address}
                 onChange={handleInputChange}
-                placeholder="123 Main Street"
+                placeholder="123 MG Road"
                 required
               />
             </div>
@@ -376,7 +376,7 @@ const NewProperty = () => {
                   name="city"
                   value={formData.city}
                   onChange={handleInputChange}
-                  placeholder="San Francisco"
+                  placeholder="Bangalore"
                   required
                 />
               </div>
@@ -387,7 +387,7 @@ const NewProperty = () => {
                   name="state"
                   value={formData.state}
                   onChange={handleInputChange}
-                  placeholder="CA"
+                  placeholder="Karnataka"
                   required
                 />
               </div>
@@ -395,13 +395,13 @@ const NewProperty = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="postal_code">Postal Code *</Label>
+                <Label htmlFor="postal_code">PIN Code *</Label>
                 <Input
                   id="postal_code"
                   name="postal_code"
                   value={formData.postal_code}
                   onChange={handleInputChange}
-                  placeholder="94102"
+                  placeholder="560001"
                   required
                 />
               </div>
@@ -412,7 +412,7 @@ const NewProperty = () => {
                   name="country"
                   value={formData.country}
                   onChange={handleInputChange}
-                  placeholder="USA"
+                  placeholder="India"
                   required
                 />
               </div>

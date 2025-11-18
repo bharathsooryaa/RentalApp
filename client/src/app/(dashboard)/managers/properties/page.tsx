@@ -5,7 +5,7 @@ import { useGetManagerPropertiesQuery, useDeletePropertyMutation } from '@/state
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, Plus, MapPin, DollarSign, Bed, Bath, Square, Edit, Trash2, Eye } from 'lucide-react';
+import { Loader2, Plus, MapPin, IndianRupee, Bed, Bath, Square, Edit, Trash2, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import { useAuth } from '@/components/AuthProvider';
@@ -144,9 +144,9 @@ const Properties = () => {
 
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="w-5 h-5 text-green-600" />
+                  <IndianRupee className="w-5 h-5 text-green-600" />
                   <span className="text-2xl font-bold text-gray-900">
-                    ${property.price_per_month.toLocaleString()}
+                    ₹{property.price_per_month.toLocaleString('en-IN')}
                   </span>
                   <span className="text-gray-600">/month</span>
                 </div>

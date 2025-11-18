@@ -5,7 +5,7 @@ import { useGetTenantResidencesQuery, useGetLeasePaymentsQuery } from '@/state/a
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, Home, MapPin, Calendar, DollarSign, User, Phone, Mail, Bed, Bath, Square, Receipt, ChevronDown, ChevronUp } from 'lucide-react';
+import { Loader2, Home, MapPin, Calendar, IndianRupee, User, Phone, Mail, Bed, Bath, Square, Receipt, ChevronDown, ChevronUp } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useAuth } from '@/components/AuthProvider';
@@ -93,10 +93,10 @@ const Residences = () => {
                     {new Date(payment.due_date).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="font-semibold">
-                    ${payment.amount_due.toFixed(2)}
+                    ₹{payment.amount_due.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </TableCell>
                   <TableCell>
-                    ${payment.amount_paid.toFixed(2)}
+                    ₹{payment.amount_paid.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </TableCell>
                   <TableCell>
                     {new Date(payment.payment_date).toLocaleDateString()}
@@ -258,20 +258,20 @@ const Residences = () => {
                       {/* Financial Information */}
                       <div className="bg-green-50 p-4 rounded-lg">
                         <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                          <DollarSign className="w-5 h-5" />
+                          <IndianRupee className="w-5 h-5" />
                           Financial Details
                         </h3>
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
                             <span className="text-gray-600">Monthly Rent:</span>
                             <span className="font-semibold text-green-700">
-                              ${lease.rent.toLocaleString()}
+                              ₹{lease.rent.toLocaleString('en-IN')}
                             </span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">Security Deposit:</span>
                             <span className="font-semibold">
-                              ${lease.deposit.toLocaleString()}
+                              ₹{lease.deposit.toLocaleString('en-IN')}
                             </span>
                           </div>
                         </div>
