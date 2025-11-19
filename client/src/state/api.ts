@@ -48,6 +48,34 @@ export interface Property {
   number_of_reviews: number;
   location: Location;
   manager_cognito_id?: string;
+  has_active_lease?: boolean;
+  active_lease?: {
+    id: number;
+    start_date: string;
+    end_date: string;
+    tenant_cognito_id: string;
+  } | null;
+  distance?: number;
+  distanceText?: string;
+}
+
+export interface SearchFilters {
+  city?: string;
+  state?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  beds?: number;
+  baths?: number;
+  propertyType?: string;
+  isPetsAllowed?: boolean;
+  isParkingIncluded?: boolean;
+  minSquareFeet?: number;
+  maxSquareFeet?: number;
+  latitude?: number;
+  longitude?: number;
+  radiusKm?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
 }
 
 export interface Application {
@@ -110,8 +138,27 @@ export const api = createApi({
     },
   }),
   reducerPath: "api",
-  tagTypes: ["Tenant", "Manager", "Applications", "Favorites", "Residences", "Payments", "Properties"],
+  tagTypes: ["Tenant", "Manager", "Applications", "Favorites", "Residences", "Payments", "Properties", "Search"],
   endpoints: (build) => ({
+    // Public search endpoint
+    searchProperties: build.query<Property[], SearchFilters>({
+      query: (filters) => {
+        const params = new URLSearchParams();
+        Object.entries(filters).forEach(([key, value]) => {
+          if (value !== undefined && value !== null && value !== '') {
+            params.append(key, String(value));
+          }
+        });
+        return `/search?${params.toString()}`;
+      },
+      providesTags: ["Search"],
+    }),
+
+    // Public property detail endpoint
+    getPublicPropertyById: build.query<Property, number>({
+      query: (propertyId) => `/search/${propertyId}`,
+      providesTags: ["Properties"],
+    }),
     // Tenant endpoints
     getTenant: build.query<Tenant, string>({
       query: (cognitoId) => `/tenants/${cognitoId}`,
@@ -280,6 +327,8 @@ export const api = createApi({
 });
 
 export const {
+  useSearchPropertiesQuery,
+  useGetPublicPropertyByIdQuery,
   useGetTenantQuery,
   useUpdateTenantMutation,
   useGetTenantApplicationsQuery,

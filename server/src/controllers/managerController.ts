@@ -120,8 +120,27 @@ export const getManagerProperties = async (req:Request,res:Response) => {
             console.error("Supabase error:", error);
             return res.status(500).json({ error: "Database query failed", details: error.message });
         }
+
+        // For each property, check if it has an active lease
+        const propertiesWithLeaseInfo = await Promise.all(
+            (properties || []).map(async (property) => {
+                const { data: activeLease } = await supabase
+                    .from("lease")
+                    .select("id, start_date, end_date, tenant_cognito_id")
+                    .eq("property_id", property.id)
+                    .gte("end_date", new Date().toISOString())
+                    .lte("start_date", new Date().toISOString())
+                    .single();
+                
+                return {
+                    ...property,
+                    has_active_lease: !!activeLease,
+                    active_lease: activeLease || null
+                };
+            })
+        );
         
-        res.json(properties || []);
+        res.json(propertiesWithLeaseInfo);
 
     } catch (error) {
         console.error("Error fetching properties:", error);

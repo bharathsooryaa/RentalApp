@@ -9,10 +9,21 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Loader2, ArrowLeft, Save, Building, Upload, X } from 'lucide-react';
+import { Loader2, ArrowLeft, Save, Building, Upload, X, MapPin } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
+import dynamic from 'next/dynamic';
+
+// Dynamically import LocationPicker to avoid SSR issues with Leaflet
+const LocationPicker = dynamic(() => import('@/components/LocationPicker'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[400px] bg-gray-100 rounded-lg flex items-center justify-center">
+      <p className="text-gray-500">Loading map...</p>
+    </div>
+  ),
+});
 
 const NewProperty = () => {
   const router = useRouter();
@@ -40,6 +51,7 @@ const NewProperty = () => {
 
   const [photoUrls, setPhotoUrls] = useState<string[]>([]);
   const [photoInput, setPhotoInput] = useState('');
+  const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -66,12 +78,30 @@ const NewProperty = () => {
     setPhotoUrls(prev => prev.filter((_, i) => i !== index));
   };
 
+  const handleLocationChange = (lat: number, lng: number) => {
+    setCoordinates({ lat, lng });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!user?.id) {
       toast.error('User not authenticated');
       return;
+    }
+
+    // Build the location object with coordinates if available
+    const locationData: any = {
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      country: formData.country,
+      postal_code: formData.postal_code,
+    };
+
+    // Add coordinates in GeoJSON format if selected
+    if (coordinates) {
+      locationData.coordinates = `POINT(${coordinates.lng} ${coordinates.lat})`;
     }
 
     try {
@@ -89,13 +119,7 @@ const NewProperty = () => {
         is_pets_allowed: formData.is_pets_allowed,
         is_parking_included: formData.is_parking_included,
         photo_urls: photoUrls.length > 0 ? photoUrls : undefined,
-        location: {
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          country: formData.country,
-          postal_code: formData.postal_code,
-        },
+        location: locationData,
       }).unwrap();
       
       toast.success('Property created successfully!');
@@ -352,8 +376,11 @@ const NewProperty = () => {
         {/* Location */}
         <Card>
           <CardHeader>
-            <CardTitle>Location</CardTitle>
-            <CardDescription>Property address information</CardDescription>
+            <CardTitle className="flex items-center gap-2">
+              <MapPin className="w-5 h-5" />
+              Location
+            </CardTitle>
+            <CardDescription>Property address and map location</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
@@ -416,6 +443,16 @@ const NewProperty = () => {
                   required
                 />
               </div>
+            </div>
+
+            <div className="space-y-2 pt-4 border-t">
+              <Label>Pin Property Location on Map</Label>
+              <LocationPicker
+                onLocationChange={handleLocationChange}
+                initialLat={coordinates?.lat}
+                initialLng={coordinates?.lng}
+                address={`${formData.address}, ${formData.city}, ${formData.state}, ${formData.country}`}
+              />
             </div>
           </CardContent>
         </Card>

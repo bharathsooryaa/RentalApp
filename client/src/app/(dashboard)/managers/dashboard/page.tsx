@@ -30,7 +30,10 @@ const Dashboard = () => {
   const approvedApplications = applications?.filter(app => app.status === 'Approved').length || 0;
   const deniedApplications = applications?.filter(app => app.status === 'Denied').length || 0;
   
-  const totalMonthlyRevenue = properties?.reduce((sum, prop) => sum + prop.price_per_month, 0) || 0;
+  // Only count revenue from occupied properties (properties with active leases)
+  const occupiedProperties = properties?.filter(prop => prop.has_active_lease) || [];
+  const totalMonthlyRevenue = occupiedProperties.reduce((sum, prop) => sum + prop.price_per_month, 0);
+  const occupiedCount = occupiedProperties.length;
   const averageRent = totalProperties > 0 ? totalMonthlyRevenue / totalProperties : 0;
   
   // Get recent applications (last 5)
@@ -92,7 +95,7 @@ const Dashboard = () => {
               ₹{totalMonthlyRevenue.toLocaleString('en-IN')}
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              Avg: ₹{Math.round(averageRent).toLocaleString('en-IN')} per property
+              From {occupiedCount} occupied {occupiedCount === 1 ? 'property' : 'properties'}
             </p>
           </CardContent>
         </Card>

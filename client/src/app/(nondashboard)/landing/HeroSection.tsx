@@ -1,10 +1,29 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+
 function HeroSection() {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      router.push(`/search?city=${encodeURIComponent(searchQuery)}`);
+    } else {
+      router.push('/search');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div className='relative h-screen'>
       <Image
@@ -35,13 +54,14 @@ function HeroSection() {
           <div className='flex justify-center'>
             <Input
             type="text"
-            value="search query"
-            onChange={()=>{}}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyPress={handleKeyPress}
             placeholder="Search by city, locality, or address"
             className='w-full max-w-2xl rounded-none rounded-l-xl border-none bg-white h-12'
             />
             <Button
-             onClick={()=>{}}
+             onClick={handleSearch}
             className='bg-secondary-500 text-white  rounded-none rounded-r-xl border-none  hover:bg-secondary-600 h-12'
             >
               Search

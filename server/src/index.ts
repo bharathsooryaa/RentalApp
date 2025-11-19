@@ -8,6 +8,7 @@ import { authMiddleware } from './middleware/AuthMiddleware.js';
 /*ROUTE IMPORTS*/
 import tenantRoutes from './routes/tenantRoutes.js';
 import managerRoutes from './routes/managerRoutes.js';
+import searchRoutes from './routes/searchRoutes.js';
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.get('/', (req, res) => {
 // API Routes
 app.use("/tenants", authMiddleware(["tenant"]), tenantRoutes)
 app.use("/managers", authMiddleware(["manager"]), managerRoutes)
+app.use("/search", searchRoutes) // Public search endpoint
 
 // Health check endpoint
 app.get('/health', (req, res) => {
