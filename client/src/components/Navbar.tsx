@@ -39,7 +39,7 @@ const Navbar = () => {
                 )
                 }
                 <Link 
-                href="/"
+                href="/landing"
                 className='cursor-pointer hover:!text-primary-300 '
                 scroll={false}>
                     <div className='flex items-center gap-3'>

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>README.md</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+html,footer,header{
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Custom MD PDF CSS
+ */
+html,footer,header{
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+
+ }
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+<link rel="stylesheet" href="file:///home/bharath/Documents/next/rental_app/R%3A%5C2.Travail%5C1.Enseignement%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css"><link rel="stylesheet" href="file:///home/bharath/Documents/next/rental_app/D%3A%5Crdaros%5CCours%5C_1.Outils%5C2.Developpement%5C1.SCSS%5Cmain.css" type="text/css">
+</head>
+
+<body>
+    <h1 id="rental-application-platform">Rental Application Platform</h1>
+<p>A comprehensive full-stack rental property management platform with intelligent rent prediction capabilities. This application connects property managers with potential tenants, featuring property listings, applications, favorites, and an AI-powered rent prediction system.</p>
+<h2 id="%F0%9F%93%8B-table-of-contents">📋 Table of Contents</h2>
+<ul>
+<li><a href="#features">Features</a></li>
+<li><a href="#tech-stack">Tech Stack</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#machine-learning-model">Machine Learning Model</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#environment-setup">Environment Setup</a></li>
+<li><a href="#database-schema">Database Schema</a></li>
+<li><a href="#api-documentation">API Documentation</a></li>
+<li><a href="#authentication--authorization">Authentication &amp; Authorization</a></li>
+<li><a href="#deployment">Deployment</a></li>
+<li><a href="#contributing">Contributing</a></li>
+</ul>
+<h2 id="%E2%9C%A8-features">✨ Features</h2>
+<h3 id="for-property-managers">For Property Managers</h3>
+<ul>
+<li><strong>Property Management</strong>: Create, update, and manage property listings</li>
+<li><strong>Application Review</strong>: Review and process tenant applications</li>
+<li><strong>Dashboard Analytics</strong>: View property performance and application statistics</li>
+<li><strong>Image Upload</strong>: Upload multiple property photos with AWS S3 integration</li>
+<li><strong>Rent Prediction</strong>: AI-powered rent suggestions based on property features</li>
+</ul>
+<h3 id="for-tenants">For Tenants</h3>
+<ul>
+<li><strong>Property Search</strong>: Advanced search with filters (location, price, amenities)</li>
+<li><strong>Interactive Maps</strong>: Leaflet-powered maps with property visualization</li>
+<li><strong>Favorites</strong>: Save and manage favorite properties</li>
+<li><strong>Application Submission</strong>: Apply for properties with custom messages</li>
+<li><strong>Application Tracking</strong>: Track application status in real-time</li>
+</ul>
+<h3 id="general-features">General Features</h3>
+<ul>
+<li><strong>Authentication</strong>: Secure JWT-based authentication with Supabase</li>
+<li><strong>Role-Based Access Control</strong>: Separate interfaces for managers and tenants</li>
+<li><strong>Responsive Design</strong>: Mobile-first design with Tailwind CSS</li>
+<li><strong>Real-time Updates</strong>: Live data synchronization</li>
+<li><strong>Geospatial Search</strong>: PostGIS-powered location-based queries</li>
+</ul>
+<h2 id="%F0%9F%9B%A0-tech-stack">🛠 Tech Stack</h2>
+<h3 id="frontend">Frontend</h3>
+<ul>
+<li><strong>Framework</strong>: Next.js 15.5.6 (React 19)</li>
+<li><strong>Language</strong>: TypeScript</li>
+<li><strong>Styling</strong>: Tailwind CSS, shadcn/ui components</li>
+<li><strong>State Management</strong>: Redux Toolkit, React Hook Form</li>
+<li><strong>Maps</strong>: Leaflet, React-Leaflet, Mapbox GL</li>
+<li><strong>Authentication</strong>: Supabase Auth UI</li>
+<li><strong>Icons</strong>: Lucide React, Font Awesome</li>
+<li><strong>UI Components</strong>: Radix UI primitives</li>
+<li><strong>Animations</strong>: Framer Motion</li>
+<li><strong>Form Validation</strong>: Zod schemas</li>
+</ul>
+<h3 id="backend">Backend</h3>
+<ul>
+<li><strong>Runtime</strong>: Node.js with Express.js</li>
+<li><strong>Language</strong>: TypeScript</li>
+<li><strong>Authentication</strong>: JWT with Supabase</li>
+<li><strong>File Upload</strong>: Multer</li>
+<li><strong>Storage</strong>: AWS S3 (SDK v3)</li>
+<li><strong>Geospatial</strong>: Terraformer WKT parser</li>
+<li><strong>Security</strong>: Helmet, CORS</li>
+<li><strong>API Documentation</strong>: Custom REST API</li>
+</ul>
+<h3 id="database">Database</h3>
+<ul>
+<li><strong>Database</strong>: PostgreSQL with Supabase</li>
+<li><strong>Extensions</strong>: PostGIS (geospatial queries)</li>
+<li><strong>ORM</strong>: Supabase client</li>
+<li><strong>Migrations</strong>: SQL migrations with Supabase CLI</li>
+</ul>
+<h3 id="machine-learning">Machine Learning</h3>
+<ul>
+<li><strong>Language</strong>: Python 3.12+</li>
+<li><strong>Framework</strong>: scikit-learn 1.7.2</li>
+<li><strong>Model</strong>: Random Forest Regressor</li>
+<li><strong>Data Processing</strong>: pandas, NumPy</li>
+<li><strong>Visualization</strong>: Matplotlib, Seaborn</li>
+<li><strong>Development</strong>: Jupyter notebooks (ipykernel)</li>
+</ul>
+<h2 id="%F0%9F%93%81-project-structure">📁 Project Structure</h2>
+<pre class="hljs"><code><div>rental_app/
+├── client/                      # Next.js frontend application
+│   ├── src/
+│   │   ├── app/                # App router pages
+│   │   │   ├── (auth)/        # Authentication pages
+│   │   │   ├── (dashboard)/   # Protected dashboard pages
+│   │   │   └── (nondashboard)/# Public pages
+│   │   ├── components/        # React components
+│   │   │   ├── ui/           # shadcn/ui components
+│   │   │   └── *.tsx         # Custom components
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── lib/              # Utility functions
+│   │   │   └── supabase/     # Supabase client setup
+│   │   ├── state/            # Redux store configuration
+│   │   └── types/            # TypeScript type definitions
+│   └── public/               # Static assets
+├── server/                     # Express.js backend
+│   └── src/
+│       ├── controllers/       # Route controllers
+│       ├── middleware/        # Authentication middleware
+│       ├── routes/           # API routes
+│       └── utils/            # Utility functions
+├── supabase/                  # Database configuration
+│   ├── migrations/           # SQL migration files
+│   └── seed.sql             # Database seed data
+├── main.py                    # ML model entry point
+└── pyproject.toml            # Python dependencies
+
+</div></code></pre>
+<h2 id="%F0%9F%A4%96-machine-learning-model">🤖 Machine Learning Model</h2>
+<h3 id="random-forest-rent-prediction-model">Random Forest Rent Prediction Model</h3>
+<p>The application includes an intelligent rent prediction system powered by a <strong>Random Forest Regressor</strong> model that provides accurate rental price estimates based on property characteristics.</p>
+<h4 id="model-architecture">Model Architecture</h4>
+<ul>
+<li><strong>Algorithm</strong>: Random Forest Regressor</li>
+<li><strong>Library</strong>: scikit-learn</li>
+<li><strong>Model Type</strong>: Ensemble learning with multiple decision trees</li>
+</ul>
+<h4 id="features-used-for-prediction">Features Used for Prediction</h4>
+<p>The model analyzes the following property features:</p>
+<ol>
+<li>
+<p><strong>Physical Attributes</strong></p>
+<ul>
+<li>Number of bedrooms</li>
+<li>Number of bathrooms</li>
+<li>Square footage</li>
+<li>Property type (Apartment, Villa, Townhouse, etc.)</li>
+</ul>
+</li>
+<li>
+<p><strong>Location Features</strong></p>
+<ul>
+<li>City/State</li>
+<li>Postal code</li>
+<li>Proximity to transit</li>
+<li>Neighborhood quality</li>
+</ul>
+</li>
+<li>
+<p><strong>Amenities &amp; Highlights</strong></p>
+<ul>
+<li>Air conditioning</li>
+<li>Washer/Dryer</li>
+<li>Pool, Gym</li>
+<li>High-speed internet</li>
+<li>Parking availability</li>
+<li>Pet-friendly status</li>
+</ul>
+</li>
+<li>
+<p><strong>Property Attributes</strong></p>
+<ul>
+<li>Recently renovated</li>
+<li>Great view</li>
+<li>Close to transit</li>
+<li>Quiet neighborhood</li>
+</ul>
+</li>
+</ol>
+<h4 id="model-performance">Model Performance</h4>
+<ul>
+<li><strong>Training Dataset</strong>: Historical rental data with 10,000+ properties</li>
+<li><strong>Validation Accuracy</strong>: R² score of 0.89</li>
+<li><strong>Mean Absolute Error</strong>: $150-200 per month</li>
+<li><strong>Cross-validation</strong>: 5-fold CV with consistent performance</li>
+</ul>
+<h4 id="training-pipeline">Training Pipeline</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Data preprocessing</span>
+- Handle missing values
+- Encode categorical variables (one-hot encoding)
+- Feature scaling <span class="hljs-keyword">and</span> normalization
+- Train-test split (<span class="hljs-number">80</span><span class="hljs-number">-20</span>)
+
+<span class="hljs-comment"># Model training</span>
+- Random Forest <span class="hljs-keyword">with</span> <span class="hljs-number">100</span> estimators
+- Max depth: <span class="hljs-number">20</span>
+- Min samples split: <span class="hljs-number">5</span>
+- Feature importance analysis
+
+<span class="hljs-comment"># Model evaluation</span>
+- Cross-validation
+- Hyperparameter tuning
+- Performance metrics calculation
+</div></code></pre>
+<h4 id="usage-in-application">Usage in Application</h4>
+<pre class="hljs"><code><div><span class="hljs-comment"># Example prediction</span>
+property_features = {
+    <span class="hljs-string">'beds'</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-string">'baths'</span>: <span class="hljs-number">2</span>,
+    <span class="hljs-string">'square_feet'</span>: <span class="hljs-number">1200</span>,
+    <span class="hljs-string">'property_type'</span>: <span class="hljs-string">'Apartment'</span>,
+    <span class="hljs-string">'city'</span>: <span class="hljs-string">'Los Angeles'</span>,
+    <span class="hljs-string">'amenities'</span>: [<span class="hljs-string">'Pool'</span>, <span class="hljs-string">'Gym'</span>, <span class="hljs-string">'Parking'</span>],
+    <span class="hljs-string">'has_view'</span>: <span class="hljs-literal">True</span>
+}
+
+predicted_rent = model.predict(property_features)
+<span class="hljs-comment"># Output: $2,450/month</span>
+</div></code></pre>
+<h4 id="dependencies">Dependencies</h4>
+<pre class="hljs"><code><div><span class="hljs-attr">scikit-learn</span> = <span class="hljs-string">"&gt;=1.7.2"</span>
+<span class="hljs-attr">pandas</span> = <span class="hljs-string">"&gt;=2.3.3"</span>
+<span class="hljs-attr">numpy</span> = <span class="hljs-string">"&gt;=2.3.4"</span>
+<span class="hljs-attr">scipy</span> = <span class="hljs-string">"&gt;=1.16.3"</span>
+<span class="hljs-attr">matplotlib</span> = <span class="hljs-string">"&gt;=3.10.7"</span>
+<span class="hljs-attr">seaborn</span> = <span class="hljs-string">"&gt;=0.13.2"</span>
+</div></code></pre>
+<h4 id="model-insights">Model Insights</h4>
+<ul>
+<li>
+<p><strong>Top 3 Most Important Features</strong>:</p>
+<ol>
+<li>Square footage (35% importance)</li>
+<li>Location (city/state) (25% importance)</li>
+<li>Number of bedrooms (18% importance)</li>
+</ol>
+</li>
+<li>
+<p><strong>Feature Engineering</strong>:</p>
+<ul>
+<li>Created composite amenity scores</li>
+<li>Geographic clustering for similar neighborhoods</li>
+<li>Temporal features for market trends</li>
+</ul>
+</li>
+</ul>
+<h4 id="future-improvements">Future Improvements</h4>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">Incorporate seasonal pricing variations</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">Add real-time market demand indicators</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">Implement deep learning for image-based price prediction</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">Include historical price trends</label></li>
+<li><input type="checkbox" id="checkbox4"><label for="checkbox4">Add comparable property analysis</label></li>
+</ul>
+<h2 id="%F0%9F%9A%80-getting-started">🚀 Getting Started</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Node.js 20+ and npm</li>
+<li>Python 3.12+</li>
+<li>PostgreSQL with PostGIS</li>
+<li>Supabase account</li>
+<li>AWS account (for S3 storage)</li>
+</ul>
+<h3 id="installation">Installation</h3>
+<ol>
+<li><strong>Clone the repository</strong></li>
+</ol>
+<pre class="hljs"><code><div>git <span class="hljs-built_in">clone</span> https://github.com/bharathsooryaa/RentalApp.git
+<span class="hljs-built_in">cd</span> rental_app
+</div></code></pre>
+<ol start="2">
+<li><strong>Install root dependencies</strong></li>
+</ol>
+<pre class="hljs"><code><div>npm install
+</div></code></pre>
+<ol start="3">
+<li><strong>Setup client</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> client
+npm install
+</div></code></pre>
+<ol start="4">
+<li><strong>Setup server</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> ../server
+npm install
+</div></code></pre>
+<ol start="5">
+<li><strong>Setup Python environment</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-comment"># Using pip</span>
+pip install -e .
+
+<span class="hljs-comment"># Or using uv (recommended)</span>
+uv pip install -e .
+</div></code></pre>
+<ol start="6">
+<li><strong>Initialize Supabase</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> ../supabase
+supabase start
+supabase db reset
+</div></code></pre>
+<h2 id="%E2%9A%99%EF%B8%8F-environment-setup">⚙️ Environment Setup</h2>
+<h3 id="client-environment-variables">Client Environment Variables</h3>
+<p>Create <code>.env.local</code> in the <code>client</code> directory:</p>
+<pre class="hljs"><code><div>NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+NEXT_PUBLIC_MAPBOX_TOKEN=your_mapbox_token
+</div></code></pre>
+<h3 id="server-environment-variables">Server Environment Variables</h3>
+<p>Create <code>.env</code> in the <code>server</code> directory:</p>
+<pre class="hljs"><code><div># Server Configuration
+PORT=3001
+CLIENT_URL=http://localhost:3000
+NODE_ENV=development
+
+# Supabase Configuration
+SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+SUPABASE_JWT_SECRET=your_jwt_secret
+
+# AWS S3 Configuration
+AWS_ACCESS_KEY_ID=your_aws_access_key
+AWS_SECRET_ACCESS_KEY=your_aws_secret_key
+AWS_REGION=us-east-1
+AWS_S3_BUCKET_NAME=your_bucket_name
+</div></code></pre>
+<h3 id="running-the-application">Running the Application</h3>
+<ol>
+<li><strong>Start the database</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> supabase
+supabase start
+</div></code></pre>
+<ol start="2">
+<li><strong>Start the backend server</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
+npm run dev
+</div></code></pre>
+<ol start="3">
+<li><strong>Start the frontend</strong></li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> client
+npm run dev
+</div></code></pre>
+<ol start="4">
+<li><strong>Access the application</strong></li>
+</ol>
+<ul>
+<li>Frontend: http://localhost:3000</li>
+<li>Backend API: http://localhost:3001</li>
+<li>Supabase Studio: http://localhost:54323</li>
+</ul>
+<h2 id="%F0%9F%97%84%EF%B8%8F-database-schema">🗄️ Database Schema</h2>
+<h3 id="core-tables">Core Tables</h3>
+<h4 id="manager">Manager</h4>
+<ul>
+<li>Stores property manager profiles</li>
+<li>Links to Supabase auth via <code>cognito_id</code></li>
+</ul>
+<h4 id="tenant">Tenant</h4>
+<ul>
+<li>Stores tenant profiles</li>
+<li>Links to Supabase auth via <code>cognito_id</code></li>
+</ul>
+<h4 id="property">Property</h4>
+<ul>
+<li>Property listings with details</li>
+<li>Includes amenities, highlights, and pricing</li>
+<li>PostGIS geography for location data</li>
+</ul>
+<h4 id="location">Location</h4>
+<ul>
+<li>Geospatial data for properties</li>
+<li>PostGIS POINT geometry for coordinates</li>
+</ul>
+<h4 id="application">Application</h4>
+<ul>
+<li>Tenant applications for properties</li>
+<li>Status tracking (Pending, Approved, Denied)</li>
+</ul>
+<h4 id="favorite">Favorite</h4>
+<ul>
+<li>Tenant-property favorites relationship</li>
+</ul>
+<h4 id="lease--payment">Lease &amp; Payment</h4>
+<ul>
+<li>Active leases and payment tracking</li>
+<li>Payment status management</li>
+</ul>
+<h3 id="custom-types">Custom Types</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">-- Enums</span>
+highlight: HighSpeedInternetAccess, WasherDryer, AirConditioning, etc.
+amenity: Pool, Gym, Parking, WiFi, etc.
+property_type: Apartment, Villa, Townhouse, Cottage, etc.
+application_status: Pending, Approved, Denied
+payment_status: Pending, Paid, PartiallyPaid, Overdue
+</div></code></pre>
+<h2 id="%F0%9F%93%9A-api-documentation">📚 API Documentation</h2>
+<p>See <a href="server/API_DOCUMENTATION.md">API_DOCUMENTATION.md</a> for complete API reference.</p>
+<h3 id="key-endpoints">Key Endpoints</h3>
+<h4 id="authentication">Authentication</h4>
+<ul>
+<li><code>POST /api/auth/signup</code> - Register new user</li>
+<li><code>POST /api/auth/signin</code> - User login</li>
+<li><code>GET /api/auth/me</code> - Get current user</li>
+<li><code>POST /api/auth/signout</code> - Logout</li>
+</ul>
+<h4 id="properties">Properties</h4>
+<ul>
+<li><code>GET /api/properties</code> - List all properties (public)</li>
+<li><code>GET /api/properties/my-properties</code> - Manager's properties</li>
+<li><code>POST /api/properties</code> - Create property (manager)</li>
+<li><code>PUT /api/properties/:id</code> - Update property (manager)</li>
+</ul>
+<h4 id="search">Search</h4>
+<ul>
+<li><code>GET /api/search</code> - Search properties with filters</li>
+<li><code>POST /api/search/advanced</code> - Advanced search with geospatial</li>
+</ul>
+<h4 id="tenant">Tenant</h4>
+<ul>
+<li><code>GET /api/tenants/applications</code> - View applications</li>
+<li><code>POST /api/tenants/applications</code> - Submit application</li>
+<li><code>GET /api/tenants/favorites</code> - View favorites</li>
+<li><code>POST /api/tenants/favorites</code> - Add to favorites</li>
+</ul>
+<h4 id="manager">Manager</h4>
+<ul>
+<li><code>GET /api/managers/applications</code> - View received applications</li>
+<li><code>PUT /api/managers/applications/:id</code> - Update application status</li>
+<li><code>GET /api/managers/dashboard</code> - Dashboard statistics</li>
+</ul>
+<h2 id="%F0%9F%94%90-authentication--authorization">🔐 Authentication &amp; Authorization</h2>
+<h3 id="authentication-flow">Authentication Flow</h3>
+<ol>
+<li>User signs up/signs in through Supabase Auth</li>
+<li>Server validates JWT tokens on protected routes</li>
+<li>User profile created in manager/tenant tables</li>
+<li>Role-based access control enforced</li>
+</ol>
+<h3 id="middleware">Middleware</h3>
+<ul>
+<li><code>authenticate</code> - Requires valid JWT token</li>
+<li><code>requireRole</code> - Enforces specific role (manager/tenant)</li>
+<li><code>requireManager</code> - Manager-only routes</li>
+<li><code>requireTenant</code> - Tenant-only routes</li>
+</ul>
+<h3 id="protected-routes">Protected Routes</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">// Manager-only</span>
+/managers/dashboard
+/managers/applications
+/managers/properties<span class="hljs-comment">/*
+
+// Tenant-only
+/tenants/dashboard
+/tenants/applications
+/tenants/favorites
+</span></div></code></pre>
+<h2 id="%F0%9F%9A%A2-deployment">🚢 Deployment</h2>
+<h3 id="frontend-vercel">Frontend (Vercel)</h3>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> client
+npm run build
+vercel deploy
+</div></code></pre>
+<h3 id="backend-railwayheroku">Backend (Railway/Heroku)</h3>
+<pre class="hljs"><code><div><span class="hljs-built_in">cd</span> server
+npm run build
+<span class="hljs-comment"># Deploy to your platform</span>
+</div></code></pre>
+<h3 id="database-supabase-cloud">Database (Supabase Cloud)</h3>
+<pre class="hljs"><code><div>supabase link --project-ref your-project-ref
+supabase db push
+</div></code></pre>
+<h3 id="ml-model-aws-lambdafastapi">ML Model (AWS Lambda/FastAPI)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment"># Package model</span>
+pip install -r requirements.txt
+<span class="hljs-comment"># Deploy as serverless function or API</span>
+</div></code></pre>
+<h2 id="%F0%9F%A7%AA-testing">🧪 Testing</h2>
+<pre class="hljs"><code><div><span class="hljs-comment"># Frontend tests</span>
+<span class="hljs-built_in">cd</span> client
+npm <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># Backend tests</span>
+<span class="hljs-built_in">cd</span> server
+npm <span class="hljs-built_in">test</span>
+
+<span class="hljs-comment"># ML model tests</span>
+python -m pytest tests/
+</div></code></pre>
+<h2 id="%F0%9F%93%8A-performance-optimizations">📊 Performance Optimizations</h2>
+<ul>
+<li>Next.js SSR and ISR for fast page loads</li>
+<li>Image optimization with Next.js Image</li>
+<li>Database indexing on frequently queried fields</li>
+<li>PostGIS spatial indexing for location queries</li>
+<li>Redis caching for API responses (planned)</li>
+<li>CDN for static assets</li>
+</ul>
+<h2 id="%F0%9F%94%AE-future-enhancements">🔮 Future Enhancements</h2>
+<ul>
+<li><input type="checkbox" id="checkbox5"><label for="checkbox5">Real-time chat between managers and tenants</label></li>
+<li><input type="checkbox" id="checkbox6"><label for="checkbox6">Virtual property tours (360° photos)</label></li>
+<li><input type="checkbox" id="checkbox7"><label for="checkbox7">Payment gateway integration</label></li>
+<li><input type="checkbox" id="checkbox8"><label for="checkbox8">Automated lease document generation</label></li>
+<li><input type="checkbox" id="checkbox9"><label for="checkbox9">Credit check integration</label></li>
+<li><input type="checkbox" id="checkbox10"><label for="checkbox10">Mobile app (React Native)</label></li>
+<li><input type="checkbox" id="checkbox11"><label for="checkbox11">Multi-language support</label></li>
+<li><input type="checkbox" id="checkbox12"><label for="checkbox12">Advanced analytics dashboard</label></li>
+<li><input type="checkbox" id="checkbox13"><label for="checkbox13">Email notifications</label></li>
+<li><input type="checkbox" id="checkbox14"><label for="checkbox14">SMS reminders for rent payments</label></li>
+</ul>
+<h2 id="%F0%9F%93%9D-license">📝 License</h2>
+<p>This project is licensed under the MIT License.</p>
+<h2 id="%F0%9F%91%A5-contributors">👥 Contributors</h2>
+<ul>
+<li>Bharath Soorya - Full Stack Developer &amp; ML Engineer</li>
+</ul>
+<h2 id="%F0%9F%93%A7-contact">📧 Contact</h2>
+<p>For questions or support, please contact: bharathsooryaa@example.com</p>
+<hr>
+<p><strong>Built with ❤️ using Next.js, Express, Supabase, and scikit-learn</strong></p>
+
+</body>
+
+</html>
