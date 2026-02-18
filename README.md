@@ -517,18 +517,12 @@ python -m pytest tests/
 - [ ] Email notifications
 - [ ] SMS reminders for rent payments
 
-## 📝 License
 
-This project is licensed under the MIT License.
-
-## 👥 Contributors
-
-- Bharath Soorya - Full Stack Developer & ML Engineer
 
 ## 📧 Contact
 
-For questions or support, please contact: bharathsooryaa@example.com
+For questions or support, please contact: bsooryaa@example.com
 
 ---
 
-**Built with ❤️ using Next.js, Express, Supabase, and scikit-learn**
+**Built with using Next.js, Express, Supabase, and scikit-learn**
